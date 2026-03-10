@@ -11,5 +11,47 @@
   
     <Application.Styles>
         <FluentTheme />
+        <Style Selector="TextBox.sending">
+            <Style.Animations>
+                <Animation Duration="0:0:1.2"
+                           IterationCount="INFINITE"
+                           PlaybackDirection="Alternate"
+                           Easing="SineEaseInOut">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="1"/>
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="0.45"/>
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+<Style Selector="GridSplitter">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Grid>
+                        <Border Height="1"
+                                Background="#6B3208"
+                                VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="#B85A18"/>
+        </Style>
+        <Style Selector="ListBoxItem:selected:not(:focus-within) /template/ ContentPresenter">
+            <Setter Property="Background" Value="#B85A18"/>
+        </Style>
     </Application.Styles>
+
+    <Application.Resources>
+        <Color x:Key="SystemAccentColor">#E06010</Color>
+        <Color x:Key="SystemAccentColorLight1">#EC7828</Color>
+        <Color x:Key="SystemAccentColorLight2">#F49248</Color>
+        <Color x:Key="SystemAccentColorLight3">#F8B070</Color>
+        <Color x:Key="SystemAccentColorDark1">#C04800</Color>
+        <Color x:Key="SystemAccentColorDark2">#9E3400</Color>
+        <Color x:Key="SystemAccentColorDark3">#7A2000</Color>
+    </Application.Resources>
 </Application>

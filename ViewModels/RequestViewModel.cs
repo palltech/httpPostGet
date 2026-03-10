@@ -36,6 +36,8 @@ public partial class RequestViewModel : ViewModelBase
     public ObservableCollection<HeaderViewModel> Headers { get; } = [];
     public ResponseViewModel Response { get; } = new();
 
+    public event Action<HistoryEntry>? HistoryEntryAdded;
+
     public RequestViewModel(HttpService httpService, DataService dataService)
     {
         _httpService = httpService;
@@ -67,7 +69,7 @@ public partial class RequestViewModel : ViewModelBase
 
             Response.SetResult(result);
 
-            _dataService.AddToHistory(new HistoryEntry
+            var entry = new HistoryEntry
             {
                 Url = Url,
                 Method = SelectedMethod,
@@ -75,7 +77,9 @@ public partial class RequestViewModel : ViewModelBase
                 Body = Body,
                 Headers = Headers.Select(h => h.ToModel()).ToList(),
                 ResponseStatusCode = result.ErrorMessage is null ? result.StatusCode : null
-            });
+            };
+            _dataService.AddToHistory(entry);
+            HistoryEntryAdded?.Invoke(entry);
         }
         finally
         {

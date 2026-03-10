@@ -1,8 +1,5 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using HttpPoster.Models;
 using HttpPoster.Services;
-using System.Collections.ObjectModel;
 
 namespace HttpPoster.ViewModels;
 
@@ -12,9 +9,6 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public RequestViewModel Request { get; }
     public SidePanelViewModel SidePanel { get; }
-
-    public ObservableCollection<AddressBookEntry> AddressBook { get; } = [];
-    [ObservableProperty] private AddressBookEntry? _selectedAddressBookEntry;
 
     public MainWindowViewModel()
     {
@@ -27,15 +21,9 @@ public partial class MainWindowViewModel : ViewModelBase
 
         SidePanel.FavoriteSelected += r => Request.LoadFrom(r);
         SidePanel.HistorySelected += e => Request.LoadFromHistory(e);
+        Request.HistoryEntryAdded += SidePanel.PrependHistoryEntry;
 
         SidePanel.Reload();
-        ReloadAddressBook();
-    }
-
-    partial void OnSelectedAddressBookEntryChanged(AddressBookEntry? value)
-    {
-        if (value is not null)
-            Request.Url = value.Url;
     }
 
     [RelayCommand]
@@ -49,28 +37,5 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         var request = Request.ToSavedRequest(string.Empty);
         SidePanel.ConfirmSaveFavorite(request);
-    }
-
-    private void ReloadAddressBook()
-    {
-        AddressBook.Clear();
-        foreach (var e in _dataService.Data.AddressBook)
-            AddressBook.Add(e);
-    }
-
-    [RelayCommand]
-    private void AddAddressBookEntry(string url)
-    {
-        if (string.IsNullOrWhiteSpace(url)) return;
-        var entry = new AddressBookEntry { Url = url };
-        _dataService.AddAddressBookEntry(entry);
-        AddressBook.Add(entry);
-    }
-
-    [RelayCommand]
-    private void RemoveAddressBookEntry(AddressBookEntry entry)
-    {
-        _dataService.RemoveAddressBookEntry(entry.Id);
-        AddressBook.Remove(entry);
     }
 }

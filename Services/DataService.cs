@@ -53,6 +53,18 @@ public class DataService
         Save();
     }
 
+    public void RemoveHistoryEntry(Guid id)
+    {
+        _data.History.RemoveAll(h => h.Id == id);
+        Save();
+    }
+
+    public void ClearHistory()
+    {
+        _data.History.Clear();
+        Save();
+    }
+
     public void AddFavorite(SavedRequest request)
     {
         _data.Favorites.Add(request);
@@ -65,15 +77,12 @@ public class DataService
         Save();
     }
 
-    public void AddAddressBookEntry(AddressBookEntry entry)
+    public void RenameFavorite(Guid id, string newName)
     {
-        _data.AddressBook.Add(entry);
+        var f = _data.Favorites.FirstOrDefault(f => f.Id == id);
+        if (f is null) return;
+        f.Name = newName;
         Save();
     }
 
-    public void RemoveAddressBookEntry(Guid id)
-    {
-        _data.AddressBook.RemoveAll(e => e.Id == id);
-        Save();
-    }
 }

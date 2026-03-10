@@ -8,7 +8,7 @@
         x:Class="HttpPoster.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/app.ico"
-        Title="httpPoster"
+        Title="httpPoster [v0.1]"
         Width="1100" Height="720"
         MinWidth="800" MinHeight="500">
 
@@ -22,9 +22,20 @@
         <Border DockPanel.Dock="Bottom"
                 Background="#2D2D2D"
                 Padding="12,4">
-            <TextBlock Text="Palltech httpPoster v0.1  ©  2026"
-                       FontSize="11"
-                       Foreground="#AAAAAA"/>
+            <Grid ColumnDefinitions="*, Auto">
+                <TextBlock Text="› palltech · httpPoster · verze (0.1) · © 2026"
+                           FontSize="11"
+                           Foreground="#AAAAAA"
+                           VerticalAlignment="Center"/>
+                <Button Grid.Column="1"
+                        Content="{Binding ThemeIcon}"
+                        Command="{Binding ToggleThemeCommand}"
+                        ToolTip.Tip="Přepnout motiv"
+                        Padding="8,2"
+                        FontSize="14"
+                        Background="Transparent"
+                        Foreground="#AAAAAA"/>
+            </Grid>
         </Border>
 
         <Grid ColumnDefinitions="*, 300">
@@ -129,6 +140,7 @@
                          FontFamily="Cascadia Code,Consolas,Courier New,monospace"
                          FontSize="13"
                          Foreground="#C87D3A"
+                         SelectionForegroundBrush="White"
                          VerticalAlignment="Stretch"
                          VerticalContentAlignment="Top"/>
             </Grid>
@@ -169,6 +181,7 @@
                          FontFamily="Cascadia Code,Consolas,Courier New,monospace"
                          FontSize="13"
                          Foreground="#C87D3A"
+                         SelectionForegroundBrush="White"
                          VerticalContentAlignment="Top"/>
             </Grid>
         </Grid>
@@ -201,6 +214,7 @@
                                     </ContextMenu>
                                 </Border.ContextMenu>
                                 <TextBlock Text="{Binding Name}"
+                                           FontSize="12"
                                            TextTrimming="CharacterEllipsis"
                                            ToolTip.Tip="{Binding Url}"/>
                             </Border>

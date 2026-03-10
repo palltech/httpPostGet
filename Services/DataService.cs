@@ -6,7 +6,7 @@ namespace HttpPoster.Services;
 public class DataService
 {
     private static readonly string DataFilePath = Path.Combine(
-        AppContext.BaseDirectory, "data", "data.json");
+        AppContext.BaseDirectory, "httpposter.data.json");
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -38,9 +38,6 @@ public class DataService
 
     public void Save()
     {
-        var dir = Path.GetDirectoryName(DataFilePath)!;
-        Directory.CreateDirectory(dir);
-
         var json = JsonSerializer.Serialize(_data, JsonOptions);
         File.WriteAllText(DataFilePath, json);
     }

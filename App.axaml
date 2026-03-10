@@ -43,6 +43,12 @@
         <Style Selector="ListBoxItem:selected:not(:focus-within) /template/ ContentPresenter">
             <Setter Property="Background" Value="#B85A18"/>
         </Style>
+        <Style Selector="ListBoxItem:selected">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="SelectionForegroundBrush" Value="White"/>
+        </Style>
     </Application.Styles>
 
     <Application.Resources>

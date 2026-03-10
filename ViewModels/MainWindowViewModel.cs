@@ -1,3 +1,5 @@
+using Avalonia.Styling;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HttpPoster.Services;
 
@@ -9,6 +11,9 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public RequestViewModel Request { get; }
     public SidePanelViewModel SidePanel { get; }
+
+    [ObservableProperty] private bool _isDarkTheme;
+    public string ThemeIcon => IsDarkTheme ? "☀" : "☾";
 
     public MainWindowViewModel()
     {
@@ -24,7 +29,27 @@ public partial class MainWindowViewModel : ViewModelBase
         Request.HistoryEntryAdded += SidePanel.PrependHistoryEntry;
 
         SidePanel.Reload();
+
+        IsDarkTheme = _dataService.Data.IsDarkTheme;
+        ApplyTheme();
     }
+
+    partial void OnIsDarkThemeChanged(bool value)
+    {
+        OnPropertyChanged(nameof(ThemeIcon));
+        _dataService.Data.IsDarkTheme = value;
+        _dataService.Save();
+        ApplyTheme();
+    }
+
+    private void ApplyTheme()
+    {
+        if (Avalonia.Application.Current is { } app)
+            app.RequestedThemeVariant = IsDarkTheme ? ThemeVariant.Dark : ThemeVariant.Light;
+    }
+
+    [RelayCommand]
+    private void ToggleTheme() => IsDarkTheme = !IsDarkTheme;
 
     [RelayCommand]
     private void SaveFavorite()

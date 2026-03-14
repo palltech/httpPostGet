@@ -8,7 +8,7 @@
         x:Class="HttpPoster.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/app.ico"
-        Title="httpPoster [v0.1]"
+        Title="httpPoster [v1.0]"
         Width="1100" Height="720"
         MinWidth="800" MinHeight="500">
 
@@ -23,7 +23,7 @@
                 Background="{DynamicResource StatusBarBackground}"
                 Padding="12,4">
             <Grid ColumnDefinitions="*, Auto">
-                <TextBlock Text="› palltech · httpPoster · version (0.1) · © 2026"
+                <TextBlock Text="› palltech · httpPoster · version (1.0) · © 2026"
                            FontSize="11"
                            Foreground="{DynamicResource StatusBarForeground}"
                            VerticalAlignment="Center"/>

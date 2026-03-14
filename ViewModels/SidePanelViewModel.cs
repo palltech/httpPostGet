@@ -57,10 +57,16 @@ public partial class SidePanelViewModel : ViewModelBase
             History.RemoveAt(History.Count - 1);
     }
 
+    private void InsertSorted(SavedRequest request)
+    {
+        var index = Favorites.TakeWhile(f => string.Compare(f.Name, request.Name, StringComparison.CurrentCultureIgnoreCase) <= 0).Count();
+        Favorites.Insert(index, request);
+    }
+
     public void Reload()
     {
         Favorites.Clear();
-        foreach (var f in _dataService.Data.Favorites)
+        foreach (var f in _dataService.Data.Favorites.OrderBy(f => f.Name, StringComparer.CurrentCultureIgnoreCase))
             Favorites.Add(f);
 
         History.Clear();
@@ -103,7 +109,7 @@ public partial class SidePanelViewModel : ViewModelBase
         // Refresh item in the list (SavedRequest is plain class, no INPC)
         var idx = Favorites.IndexOf(_favoriteToRename);
         _favoriteToRename.Name = RenameFavoriteName;
-        if (idx >= 0) { Favorites.RemoveAt(idx); Favorites.Insert(idx, _favoriteToRename); }
+        if (idx >= 0) { Favorites.RemoveAt(idx); InsertSorted(_favoriteToRename); }
 
         _favoriteToRename = null;
         RenameFavoriteName = string.Empty;
@@ -155,7 +161,7 @@ public partial class SidePanelViewModel : ViewModelBase
             Headers = _historyEntryToSave.Headers.ToList()
         };
         _dataService.AddFavorite(request);
-        Favorites.Add(request);
+        InsertSorted(request);
 
         _historyEntryToSave = null;
         SaveHistoryAsFavoriteName = string.Empty;
@@ -185,7 +191,7 @@ public partial class SidePanelViewModel : ViewModelBase
 
         request.Name = NewFavoriteName;
         _dataService.AddFavorite(request);
-        Favorites.Add(request);
+        InsertSorted(request);
 
         NewFavoriteName = string.Empty;
         IsSaveFavoriteVisible = false;

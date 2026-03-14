@@ -1,6 +1,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using HttpPoster.Services;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace HttpPoster.ViewModels;
 
@@ -25,7 +27,7 @@ public partial class ResponseViewModel : ViewModelBase
         {
             IsError = false;
             StatusText = $"{result.StatusCode} {result.ReasonPhrase}  ({result.Elapsed.TotalMilliseconds:0} ms)";
-            Body = TryPrettyJson(result.Body);
+            Body = TryPrettyJson(result.Body) ?? TryPrettyXml(result.Body) ?? result.Body;
             HeadersText = string.Join("\n", result.Headers.Select(h => $"{h.Key}: {h.Value}"));
         }
 
@@ -41,16 +43,23 @@ public partial class ResponseViewModel : ViewModelBase
         IsError = false;
     }
 
-    private static string TryPrettyJson(string body)
+    private static string? TryPrettyJson(string body)
     {
         try
         {
             var doc = JsonDocument.Parse(body);
             return JsonSerializer.Serialize(doc, new JsonSerializerOptions { WriteIndented = true });
         }
-        catch
+        catch { return null; }
+    }
+
+    private static string? TryPrettyXml(string body)
+    {
+        try
         {
-            return body;
+            var doc = XDocument.Parse(body);
+            return doc.ToString(SaveOptions.None);
         }
+        catch { return null; }
     }
 }

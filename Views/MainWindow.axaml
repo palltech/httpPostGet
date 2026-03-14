@@ -20,12 +20,12 @@
 
         <!-- STATUS BAR -->
         <Border DockPanel.Dock="Bottom"
-                Background="#2D2D2D"
+                Background="{DynamicResource StatusBarBackground}"
                 Padding="12,4">
             <Grid ColumnDefinitions="*, Auto">
                 <TextBlock Text="› palltech · httpPoster · verze (0.1) · © 2026"
                            FontSize="11"
-                           Foreground="#AAAAAA"
+                           Foreground="{DynamicResource StatusBarForeground}"
                            VerticalAlignment="Center"/>
                 <Button Grid.Column="1"
                         Content="{Binding ThemeIcon}"
@@ -34,7 +34,7 @@
                         Padding="8,2"
                         FontSize="14"
                         Background="Transparent"
-                        Foreground="#AAAAAA"/>
+                        Foreground="{DynamicResource StatusBarForeground}"/>
             </Grid>
         </Border>
 
@@ -114,7 +114,7 @@
             </Expander>
 
             <!-- TĚLO -->
-            <Grid Grid.Row="2" RowDefinitions="Auto, *" Margin="0,0,0,6">
+            <Grid Grid.Row="2" RowDefinitions="Auto, Auto, *" Margin="0,0,0,6">
                 <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0,0,0,6">
                     <TextBlock Grid.Column="0"
                                Text="TĚLO"
@@ -133,13 +133,33 @@
                             IsVisible="{Binding SidePanel.IsNormalActionsVisible}"
                             HorizontalAlignment="Right"/>
                 </Grid>
-                <TextBox Grid.Row="1"
+                <!-- Formulář uložení oblíbeného -->
+                <StackPanel Grid.Row="1"
+                            IsVisible="{Binding SidePanel.IsSaveFavoriteVisible}"
+                            Margin="0,0,0,6"
+                            Spacing="4">
+                    <TextBox Text="{Binding SidePanel.NewFavoriteName}"
+                             Watermark="Název requestu..."/>
+                    <Grid ColumnDefinitions="*, *">
+                        <Button Grid.Column="0"
+                                Content="Uložit"
+                                Command="{Binding ConfirmSaveFavoriteCommand}"
+                                Classes="accent"
+                                HorizontalAlignment="Stretch"
+                                Margin="0,0,4,0"/>
+                        <Button Grid.Column="1"
+                                Content="Zrušit"
+                                Command="{Binding SidePanel.CancelSaveFavoriteCommand}"
+                                HorizontalAlignment="Stretch"/>
+                    </Grid>
+                </StackPanel>
+                <TextBox Grid.Row="2"
                          Text="{Binding Request.Body}"
                          AcceptsReturn="True"
                          TextWrapping="Wrap"
                          FontFamily="Cascadia Code,Consolas,Courier New,monospace"
                          FontSize="13"
-                         Foreground="#C87D3A"
+                         Foreground="{DynamicResource EditorForeground}"
                          SelectionForegroundBrush="White"
                          VerticalAlignment="Stretch"
                          VerticalContentAlignment="Top"/>
@@ -180,7 +200,7 @@
                          TextWrapping="Wrap"
                          FontFamily="Cascadia Code,Consolas,Courier New,monospace"
                          FontSize="13"
-                         Foreground="#C87D3A"
+                         Foreground="{DynamicResource EditorForeground}"
                          SelectionForegroundBrush="White"
                          VerticalContentAlignment="Top"/>
             </Grid>
@@ -197,6 +217,7 @@
                            Text="OBLÍBENÉ"
                            FontWeight="SemiBold"
                            FontSize="12"
+                           Foreground="{DynamicResource SectionLabelForeground}"
                            Margin="0,0,0,6"/>
 
                 <ListBox Grid.Row="1"
@@ -223,24 +244,6 @@
                 </ListBox>
 
                 <StackPanel Grid.Row="2" Margin="0,6,0,0" Spacing="4">
-                    <!-- Formulář uložení oblíbeného -->
-                    <StackPanel IsVisible="{Binding SidePanel.IsSaveFavoriteVisible}" Spacing="4">
-                        <TextBox Text="{Binding SidePanel.NewFavoriteName}"
-                                 Watermark="Název requestu..."/>
-                        <Grid ColumnDefinitions="*, *">
-                            <Button Grid.Column="0"
-                                    Content="Uložit"
-                                    Command="{Binding ConfirmSaveFavoriteCommand}"
-                                    Classes="accent"
-                                    HorizontalAlignment="Stretch"
-                                    Margin="0,0,4,0"/>
-                            <Button Grid.Column="1"
-                                    Content="Zrušit"
-                                    Command="{Binding SidePanel.CancelSaveFavoriteCommand}"
-                                    HorizontalAlignment="Stretch"/>
-                        </Grid>
-                    </StackPanel>
-
                     <!-- Formulář přejmenování oblíbeného -->
                     <StackPanel IsVisible="{Binding SidePanel.IsRenameFavoriteVisible}" Spacing="4">
                         <TextBox Text="{Binding SidePanel.RenameFavoriteName}"
@@ -273,6 +276,7 @@
                            Text="HISTORIE"
                            FontWeight="SemiBold"
                            FontSize="12"
+                           Foreground="{DynamicResource SectionLabelForeground}"
                            Margin="0,4,0,6"/>
 
                 <ListBox Grid.Row="1"

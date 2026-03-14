@@ -8,7 +8,7 @@
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-  
+
     <Application.Styles>
         <FluentTheme />
         <Style Selector="TextBox.sending">
@@ -26,25 +26,25 @@
                 </Animation>
             </Style.Animations>
         </Style>
-<Style Selector="GridSplitter">
+        <Style Selector="GridSplitter">
             <Setter Property="Template">
                 <ControlTemplate>
                     <Grid>
                         <Border Height="1"
-                                Background="#6B3208"
+                                Background="{DynamicResource SplitterBrush}"
                                 VerticalAlignment="Center"/>
                     </Grid>
                 </ControlTemplate>
             </Setter>
         </Style>
         <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-            <Setter Property="Background" Value="#B85A18"/>
+            <Setter Property="Background" Value="{DynamicResource ListBoxSelectedBackground}"/>
         </Style>
         <Style Selector="ListBoxItem:selected:not(:focus-within) /template/ ContentPresenter">
-            <Setter Property="Background" Value="#B85A18"/>
+            <Setter Property="Background" Value="{DynamicResource ListBoxSelectedBackground}"/>
         </Style>
         <Style Selector="ListBoxItem:selected">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{DynamicResource ListBoxSelectedForeground}"/>
         </Style>
         <Style Selector="TextBox">
             <Setter Property="SelectionForegroundBrush" Value="White"/>
@@ -52,12 +52,34 @@
     </Application.Styles>
 
     <Application.Resources>
-        <Color x:Key="SystemAccentColor">#E06010</Color>
-        <Color x:Key="SystemAccentColorLight1">#EC7828</Color>
-        <Color x:Key="SystemAccentColorLight2">#F49248</Color>
-        <Color x:Key="SystemAccentColorLight3">#F8B070</Color>
-        <Color x:Key="SystemAccentColorDark1">#C04800</Color>
-        <Color x:Key="SystemAccentColorDark2">#9E3400</Color>
-        <Color x:Key="SystemAccentColorDark3">#7A2000</Color>
+        <ResourceDictionary>
+            <Color x:Key="SystemAccentColor">#E06010</Color>
+            <Color x:Key="SystemAccentColorLight1">#EC7828</Color>
+            <Color x:Key="SystemAccentColorLight2">#F49248</Color>
+            <Color x:Key="SystemAccentColorLight3">#F8B070</Color>
+            <Color x:Key="SystemAccentColorDark1">#C04800</Color>
+            <Color x:Key="SystemAccentColorDark2">#9E3400</Color>
+            <Color x:Key="SystemAccentColorDark3">#7A2000</Color>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="EditorForeground" Color="#1A1A1A"/>
+                    <SolidColorBrush x:Key="SectionLabelForeground" Color="#F07828"/>
+                    <SolidColorBrush x:Key="SplitterBrush" Color="#F07828"/>
+                    <SolidColorBrush x:Key="ListBoxSelectedBackground" Color="#FDDBB8"/>
+                    <SolidColorBrush x:Key="ListBoxSelectedForeground" Color="#1A1A1A"/>
+                    <SolidColorBrush x:Key="StatusBarBackground" Color="#EBEBEB"/>
+                    <SolidColorBrush x:Key="StatusBarForeground" Color="#555555"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="EditorForeground" Color="#C87D3A"/>
+                    <SolidColorBrush x:Key="ListBoxSelectedBackground" Color="#B85A18"/>
+                    <SolidColorBrush x:Key="ListBoxSelectedForeground" Color="White"/>
+                    <SolidColorBrush x:Key="SectionLabelForeground" Color="#FFFFFF"/>
+                    <SolidColorBrush x:Key="SplitterBrush" Color="#6B3208"/>
+                    <SolidColorBrush x:Key="StatusBarBackground" Color="#2D2D2D"/>
+                    <SolidColorBrush x:Key="StatusBarForeground" Color="#AAAAAA"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

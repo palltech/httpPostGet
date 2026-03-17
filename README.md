@@ -1,4 +1,4 @@
-# httpPoster
+# httpPostGet
 
 Desktopová aplikace pro testování HTTP requestů. Jednoduchá, přenositelná alternativa k nástrojům jako Postman — navržena pro rychlé použití přímo u zákazníka bez nutnosti instalace.
 
@@ -13,6 +13,17 @@ Desktopová aplikace pro testování HTTP requestů. Jednoduchá, přenositelná
 - Oblíbené requesty (uložení celého requestu pod vlastním názvem)
 - Historie posledních 10 odeslaných requestů
 
+## Stažení
+
+### v1.0
+
+| Varianta | Požadavky |
+|---|---|
+| [httpPostGet-v1.0-standalone.zip](../../releases/download/v1.0/httpPostGet-v1.0-standalone.zip) | Žádné — spustí se na libovolném Windows 10/11 x64 |
+| [httpPostGet-v1.0-dependent.zip](../../releases/download/v1.0/httpPostGet-v1.0-dependent.zip) | [.NET 9 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/9.0/runtime) |
+
+> Nejste si jisti? Stáhněte standalone verzi — funguje bez instalace.
+
 ## Technologie
 
 - [Avalonia UI 11](https://avaloniaui.net/) — cross-platform desktop UI framework
@@ -23,7 +34,7 @@ Desktopová aplikace pro testování HTTP requestů. Jednoduchá, přenositelná
 ## Spuštění (development)
 
 ```bash
-dotnet run --project HttpPoster.csproj
+dotnet run --project HttpPostGet.csproj
 ```
 
 ## Publikování (self-contained, bez závislostí)
@@ -32,18 +43,18 @@ dotnet run --project HttpPoster.csproj
 dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./publish
 ```
 
-Výsledkem je jeden přenositelný `HttpPoster.exe` bez nutnosti instalace .NET runtime.
+Výsledkem je jeden přenositelný `HttpPostGet.exe` bez nutnosti instalace .NET runtime.
 
 ## Data
 
 Aplikace ukládá data do souboru `data/data.json` vedle spustitelného souboru:
 
 ```
-httpPoster.exe
+httpPostGet.exe
 data/
   data.json    ← adresář URL, oblíbené requesty, historie
 ```
 
 ---
 
-Palltech httpPoster v0.1  ©  2026
+Palltech httpPostGet v1.0  ©  2026
